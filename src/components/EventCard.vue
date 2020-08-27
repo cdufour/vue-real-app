@@ -3,6 +3,11 @@
         <div class="event-card">
             <span class="eyebrow">@{{ event.time }} on {{ event.date }}</span>
             <h4 class="title">{{ event.title }}</h4>
+            <BaseIcon name="users" />
+
+            <!-- Slot example -->
+            <!-- <BaseButton>Event title: {{ event.title }}</BaseButton> -->
+            
             <span>{{ event.attendees.length }} attending</span>
         </div>
     </router-link>
@@ -10,20 +15,9 @@
 
 <script>
 export default {
-    data() {
-        return {
-            event: {
-                id: 1,
-                title: 'Vuejs Training',
-                date: 'Tue May 15 2020',
-                time: '6:00',
-                attendees: [
-                    { id: 'abc123', name: 'Dylan Deu' },
-                    { id: 'def456', name: 'William Desgardin' }
-                ]
-            }
-        }
-    },
+    props: {
+        event: Object
+    }
 }
 </script>
 

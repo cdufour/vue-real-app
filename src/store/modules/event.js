@@ -60,13 +60,13 @@ export const actions = {
     if (event) {
         commit('SET_EVENT', event)
     } else {
-        EventService.getEvent(id)
-        .then(res => {
-        commit('SET_EVENT', res.data)
-        })
-        .catch(err => {
-        console.log('Error: ' + err.response)
-        })
+        return EventService.getEvent(id)
+            .then(res => {
+                commit('SET_EVENT', res.data)
+            })
+            .catch(err => {
+                console.log('Error: ' + err.response)
+            })
     }
     }
 }

@@ -1,13 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import * as user from '@/store/modules/user.js'
+import * as event from '@/store/modules/event.js'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: { id: 'abc123', name: 'Christophe' },
-    categories: ['nature', 'sport', 'food', 'education'],
-    count: 0
+    //user: { id: 'abc123', name: 'Christophe' },
+    categories: ['Nature', 'Sport', 'Food', 'Education'],
+    count: 0,
   },
   getters: {
     catLength: state => state.categories.length,
@@ -21,12 +24,15 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    // ATTENTION: les actions sont asynchrones
     updateCount({ state, commit }, value) {
       if (state.user.name == 'Chris') {
         commit('INCREMENT_COUNT', value)
       }
-    }
+    },
   },
   modules: {
+    user,
+    event
   }
 })

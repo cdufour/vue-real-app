@@ -5,6 +5,7 @@ import store from './store'
 //import BaseIcon from '@/components/BaseIcon.vue';
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import 'nprogress/nprogress.css'
 
 
 Vue.config.productionTip = false

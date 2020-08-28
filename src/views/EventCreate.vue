@@ -2,7 +2,7 @@
 <div>
     <h1>Create Event</h1>
 
-    <form>
+    <form @submit.prevent="createEvent">
         <label>Select a category</label> 
         <select v-model="event.category">
             <option v-for="cat in categories" :key="cat">{{ cat }}</option>
@@ -34,27 +34,40 @@
                 <option v-for="time in times" :key="time">{{ time }}</option>
             </select> 
         </div> 
-        <input type="submit" class="button -fill-gradient" value="Submit" />
+        <input type="submit" class="button -fill-gradient" 
+        value="Submit" />
     </form>
 
 </div>
 </template>
 
 <script>
+import { mapState} from 'vuex';
+import Datepicker from 'vuejs-datepicker';
+
 export default {
+    components: {
+        Datepicker
+    },
     name: 'EventCreate',
     data() {
+        const times = [];
+        for (let i = 1; i <= 24; i++) {
+            times.push(i + ':00')
+        }
         return {
-            event: this.createFreshEvent()
+            event: this.createFreshEvent(),
+            times
         }
     },
     methods: {
         createFreshEvent() {
             const id = Math.floor(Math.random() * 10000000)
+            const user = this.$store.state.user
             return {
                 id,
                 category: '',
-                organizer: '',
+                organizer: user,
                 title: '',
                 description: '',
                 location: '',
@@ -62,7 +75,24 @@ export default {
                 time: '',
                 attendees: []
             }
+        },
+        createEvent() {
+            this.$store.dispatch('event/createEvent', this.event)
+                .then(() => {
+                    // redirection vers la page event-show
+                    this.$router.push({
+                        name: 'event-show',
+                        params: { id: this.event.id }
+                    })
+
+                    this.event = this.createFreshEvent()
+                })
+                .catch(() => {
+                    console.log('Cannot create event')
+                })
+            
         }
-    }
+    },
+    computed: mapState(['categories'])
 }
 </script>
